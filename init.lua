@@ -248,6 +248,74 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-surround',
+  'tpope/vim-abolish',
+  {
+    'ludovicchabant/vim-gutentags',
+    event = { 'BufReadPost', 'BufWritePost', 'BufEnter' },
+    config = function()
+      -- This is where you'll add/modify your exclusions
+      vim.g.gutentags_exclude_dirs = {
+        '.git',
+        '.venv',
+        'node_modules',
+        'build',
+        'dist',
+        'target',
+        '__pycache__',
+        -- Add any new directories here as you encounter them
+        'typst-build', -- Example: If Typst creates a build folder
+        'my_generated_schemas', -- Example: If you have generated code
+      }
+
+      -- You can also exclude file patterns, though directories are more common for performance
+      -- vim.g.gutentags_exclude_files = { '*.bak', '*.tmp' }
+    end,
+    cond = vim.fn.executable 'ctags' == 1,
+  },
+
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = { 'markdown' },
+    build = function()
+      vim.fn['mkdp#util#install']()
+    end,
+  },
+  {
+    'lervag/vimtex',
+    lazy = false, -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      -- VimTeX configuration goes here, e.g.
+      vim.g.vimtex_view_method = 'zathura'
+    end,
+  },
+  {
+    'cameron-wags/rainbow_csv.nvim',
+    config = true,
+    ft = {
+      'csv',
+      'tsv',
+      'csv_semicolon',
+      'csv_whitespace',
+      'csv_pipe',
+      'rfc_csv',
+      'rfc_semicolon',
+    },
+    cmd = {
+      'RainbowDelim',
+      'RainbowDelimSimple',
+      'RainbowDelimQuoted',
+      'RainbowMultiDelim',
+    },
+  },
+  {
+    'brianhuster/live-preview.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
