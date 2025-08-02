@@ -152,6 +152,8 @@ vim.o.splitbelow = true
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+vim.opt.sessionoptions:append 'localoptions'
+
 -- Preview substitutions live, as you type!
 vim.o.inccommand = 'split'
 
@@ -250,6 +252,19 @@ require('lazy').setup({
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-surround',
   'tpope/vim-abolish',
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {
+        log_level = 'info',
+        auto_session_enable_last_session = false,
+        auto_session_root_dir = vim.fn.stdpath 'data' .. '/sessions/',
+        auto_session_enabled = true,
+        auto_save_enabled = true,
+        auto_restore_enabled = false, -- You control when to restore
+      }
+    end,
+  },
   {
     'ludovicchabant/vim-gutentags',
     event = { 'BufReadPost', 'BufWritePost', 'BufEnter' },
