@@ -253,6 +253,10 @@ require('lazy').setup({
   'tpope/vim-surround',
   'tpope/vim-abolish',
   {
+    'https://codeberg.org/esensar/nvim-dev-container',
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+  },
+  {
     'rmagatti/auto-session',
     config = function()
       require('auto-session').setup {
