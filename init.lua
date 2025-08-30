@@ -253,6 +253,10 @@ require('lazy').setup({
   'tpope/vim-surround',
   'tpope/vim-abolish',
   {
+    'MTDL9/vim-log-highlighting',
+    ft = { 'log', 'txt' }, -- optional: load only for log/text files
+  },
+  {
     'https://codeberg.org/esensar/nvim-dev-container',
     dependencies = 'nvim-treesitter/nvim-treesitter',
   },
@@ -292,7 +296,6 @@ require('lazy').setup({
     end,
     cond = vim.fn.executable 'ctags' == 1,
   },
-
   {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
