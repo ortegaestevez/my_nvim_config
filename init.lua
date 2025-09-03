@@ -210,14 +210,31 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
+-- 1. Define a new highlight group called 'YankOrange'
+-- The arguments for vim.api.nvim_set_hl are:
+-- 0: The global namespace (for the entire editor).
+-- 'YankOrange': The name of your custom highlight group.
+-- { ... }: A table of attributes for the highlight group.
+
+vim.api.nvim_set_hl(0, 'YankOrange', {
+  bg = '#ff8c00', -- This is a hex code for a bright orange.
+  -- You can add other attributes here too, like:
+  -- fg = '#ffffff', -- A foreground color (text color)
+  -- bold = true,    -- Make the text bold
+})
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
---  See `:help vim.hl.on_yank()`
+-- 2. Modify the TextYankPost autocommand
+-- Tell vim.highlight.on_yank() to use your new highlight group
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.hl.on_yank()
+    vim.highlight.on_yank {
+      higroup = 'YankOrange', -- Use the highlight group we just defined
+      timeout = 150,
+    }
   end,
 })
 
